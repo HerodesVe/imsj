@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s;
+  margin-left: 270px; /* Initial state with sidebar open */
+}
+
+.sidebarOpen {
+  margin-left: 250px;
+}
+
+.sidebarClosed {
+  margin-left: 80px;
+}
+
+.content {
+  padding: 1rem;
+  background-color: #f6f7f9;
+  flex: 1;
+  overflow-y: auto;
+}

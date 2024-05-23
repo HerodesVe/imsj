@@ -1,0 +1,105 @@
+.sidebar {
+  height: 100vh;
+  background-color: #ffffff;
+  border: 1px solid #F9FAFA;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  transition: width 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.open {
+  width: 250px;
+}
+
+.closed {
+  width: 80px;
+}
+
+.toggleButton {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 1rem;
+  width: 100%;
+}
+
+
+
+.logo {
+  width: 150px;
+  margin-left: 1rem;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.nav {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  text-decoration: none;
+  color: #000;
+  transition: all 0.3s;
+  white-space: nowrap;
+  border-radius: 8px;
+}
+
+
+.navItem:hover {
+  background-color: #E4EFFF;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.navIcon {
+  margin-right: 1rem;
+  font-size: 2rem;
+}
+
+.closed .navIcon {
+  margin-right: 0;
+  
+}
+
+.closed .navItem {
+  justify-content: center;
+}
+
+.navItemText {
+  display: inline;
+}
+
+.closed .navItemText {
+  display: none;
+}
+
+.navItemText::after {
+  content: '>';
+  margin-left: auto;
+  color: #0047FF;
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.active .navItemText::after {
+  opacity: 1;
+}
+
+.active {
+  background-color: #E4EFFF;
+  color: #0047FF;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
