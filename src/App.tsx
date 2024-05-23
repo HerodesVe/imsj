@@ -7,6 +7,7 @@ import Login from './pages/auth/Login/Login';
 
 import MainStructure from './components/MainStructure/MainStructure';
 import Register from './pages/auth/Register/Register';
+import ApproveUser from './pages/Usuarios/ApproveUser';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<MainStructure><Dashboard /></MainStructure>} />
+        <Route path="/approved-user" element={<MainStructure><ApproveUser /></MainStructure>} />
         <Route path="/my-project" element={<MainStructure><MyProject /></MainStructure>} />
         {/* Puedes agregar más rutas aquí */}
       </Routes>

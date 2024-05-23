@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Sidebar.module.css';
 import { MdMenu } from 'react-icons/md';
 import { routes } from '../../data/routes';
-import logo from '../../../public/logo.png'
+import logo from '../../../public/logo.png';
 
-const Sidebar = ({ isOpen, toggleSidebar }:any) => {
+const Sidebar = ({ isOpen, toggleSidebar }: any) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    navigate('/');
+  };
 
   return (
     <div className={`${styles.sidebar} ${isOpen ? styles.open : styles.closed}`}>
       <div className={styles.toggleButton} onClick={toggleSidebar}>
-        <MdMenu fontSize={"3rem"} width={"200px"}/>
-        {isOpen && <img className={styles.logo} src={logo} alt="IMSJ" /> }
+        <MdMenu fontSize={"3rem"} width={"200px"} />
+        {isOpen && <img className={styles.logo} src={logo} alt="IMSJ" />}
       </div>
       <nav className={styles.nav}>
         {routes.map(route => (
@@ -26,6 +30,7 @@ const Sidebar = ({ isOpen, toggleSidebar }:any) => {
           </Link>
         ))}
       </nav>
+      <button className={styles.logoutButton} onClick={handleLogout}>Cerrar Sesión</button>
     </div>
   );
 };

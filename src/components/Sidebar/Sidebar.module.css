@@ -1,3 +1,4 @@
+/* Sidebar.module.css */
 .sidebar {
   height: 100vh;
   background-color: #ffffff;
@@ -30,8 +31,6 @@
   width: 100%;
 }
 
-
-
 .logo {
   width: 150px;
   margin-left: 1rem;
@@ -42,6 +41,7 @@
 .nav {
   width: 100%;
   margin-top: 2rem;
+  flex-grow: 1; /* Este es el ajuste importante */
 }
 
 .navItem {
@@ -54,7 +54,6 @@
   white-space: nowrap;
   border-radius: 8px;
 }
-
 
 .navItem:hover {
   background-color: #E4EFFF;
@@ -69,7 +68,6 @@
 
 .closed .navIcon {
   margin-right: 0;
-  
 }
 
 .closed .navItem {
@@ -84,15 +82,6 @@
   display: none;
 }
 
-.navItemText::after {
-  content: '>';
-  margin-left: auto;
-  color: #0047FF;
-  display: inline-block;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
 .active .navItemText::after {
   opacity: 1;
 }
@@ -102,4 +91,15 @@
   color: #0047FF;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
+}
+
+.logoutButton {
+  margin-top: auto;
+  padding: 1rem;
+  text-align: center;
+  background-color: #f44336;
+  color: white;
+  cursor: pointer;
+  border: none;
+  width: 100%;
 }

@@ -77,6 +77,7 @@ export default function InputCalendar({
         locale="es"
         className={defaultStyle.InputalingCalendar}
         showIcon
+        inputClassName={defaultStyle.CalendarInput}
         {...otherProps} // Pasa cualquier otra prop adicional al componente Calendar
       />
     </div>

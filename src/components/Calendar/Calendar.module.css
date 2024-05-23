@@ -10,6 +10,9 @@
     height: 60px;
 }
 
+.CalendarInput{
+  padding:.3rem .5rem;
+}
 
 .InputTextsmall{
   margin: 10px;
