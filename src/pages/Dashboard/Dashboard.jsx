@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import TableComponent from "../../components/TableComponent/TableComponent";
 import styles from "./Dashboard.module.css";
@@ -59,11 +59,15 @@ const Dashboard = () => {
     }));
   };
 
+  // useEffect to call the soap service when the component mounts
+  useEffect(() => {
+    callSoapService();
+  }, []); // Empty dependency array ensures this runs once after the initial render
+
   return (
     <div className={styles.container}>
       <h1>Obtener Certificados de Trabajadores</h1>
       <hr />
-      <DetailsView onBack={handleBackClick} />
       {selectedData ? (
         <DetailsView data={selectedData} onBack={handleBackClick} />
       ) : (
