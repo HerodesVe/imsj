@@ -14,7 +14,6 @@ const mockData = [
 const columns = [
   { campo: "nombre", label: "Nombre" },
   { campo: "email", label: "Email" },
-  { campo: "role", label: "Role" },
 ];
 
 const ApproveUser: React.FC = () => {
@@ -50,9 +49,6 @@ const ApproveUser: React.FC = () => {
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            alignContent: "center",
-            // justifyContent: "center",
             gap: ".5rem",
           }}
         >
@@ -62,12 +58,13 @@ const ApproveUser: React.FC = () => {
           <h2>Confirmación</h2>
         </div>
         <p>¿Estás seguro de que quieres aprobar a {selectedUser?.nombre}?</p>
-        <div style={{
+        <div
+          style={{
             display: "flex",
             justifyContent: "flex-end",
             gap: ".5rem",
-            
-        }}>
+          }}
+        >
           <button onClick={approveUser} className={`${styles.modalButton} ${styles.modalButtonAccept}`}>
             Aceptar
           </button>
