@@ -63,6 +63,7 @@ const Dashboard = () => {
     <div className={styles.container}>
       <h1>Obtener Certificados de Trabajadores</h1>
       <hr />
+      <DetailsView onBack={handleBackClick} />
       {selectedData ? (
         <DetailsView data={selectedData} onBack={handleBackClick} />
       ) : (
