@@ -127,8 +127,8 @@ const Dashboard = () => {
             </div>
             <div className={styles.container__button}>
               <button onClick={callSoapService}> <FiCheck fontSize={"1rem"}/> Consultar </button>
-            </div>
             <GenerateExcelButton data={data} />
+            </div>
 
           </div>
           <TableComponent 

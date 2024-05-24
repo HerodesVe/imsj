@@ -172,7 +172,7 @@ const GenerateExcelButton: React.FC<GenerateExcelButtonProps> = ({ data }) => {
 
   return (
     <button className={styles.exportButton} onClick={handleExportClick}>
-      <FaFileExcel size={25} color="white" />
+      <FaFileExcel size={15} color="white" />
       DESCARGAR EXCEL
     </button>
   );
