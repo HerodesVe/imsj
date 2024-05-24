@@ -43,7 +43,8 @@ const ApproveUser: React.FC = () => {
 
   return (
     <div>
-      <h1>Aprobar Usuarios</h1>
+      <h1 className={styles.title}>Aprobar Usuarios</h1>
+      <hr />
       <TableComponent columns={columns} data={data} renderButton={renderButton} />
       <Modal isOpen={modalIsOpen} onClose={closeModal}>
         <div

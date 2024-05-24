@@ -57,7 +57,6 @@ color: #383B45;
   .exportButton {
    /* Rectangle 48 */
 all: unset;
-position: absolute;
 width: 240px;
 height: 50px;
 text-align: center;
@@ -80,3 +79,7 @@ border-radius: 25px;
     background-color: darkblue;
   }
   
+  .container__button {
+    display: flex;
+    justify-content: end;
+  }

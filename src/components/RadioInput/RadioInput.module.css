@@ -38,5 +38,9 @@
   
   .radioOption label {
     cursor: pointer;
+    width: 160px;
   }
-  
+
+.radioOption:last-child {
+  margin-left: -45px;
+}

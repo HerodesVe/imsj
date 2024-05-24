@@ -138,11 +138,14 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
           />
           
         </div>
+        <div className={styles.container__button}>
+
+        <button className={styles.exportButton}>
+          <FaFilePdf size={25} color="white" />
+          Exportar a PDF
+        </button>
+        </div>
       </div>
-      <button className={styles.exportButton}>
-        <FaFilePdf size={25} color="white" />
-        Exportar a PDF
-      </button>
     </div>
   );
 };

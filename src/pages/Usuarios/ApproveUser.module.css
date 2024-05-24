@@ -65,3 +65,8 @@
     color: white;
   }
   
+  .title {
+    font-weight: 500;
+    font-size: 1.8rem;
+    margin: 1rem 1rem;
+  }

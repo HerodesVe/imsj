@@ -16,7 +16,6 @@ const Sidebar = ({ isOpen, toggleSidebar }: any) => {
   return (
     <div className={`${styles.sidebar} ${isOpen ? styles.open : styles.closed}`}>
       <div className={styles.toggleButton} onClick={toggleSidebar}>
-        <MdMenu fontSize={"3rem"} width={"200px"} />
         {isOpen && <img className={styles.logo} src={logo} alt="IMSJ" />}
       </div>
       <nav className={styles.nav}>
