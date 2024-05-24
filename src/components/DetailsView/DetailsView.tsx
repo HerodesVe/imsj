@@ -129,7 +129,7 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
             gap: "20px",
           }}
         >
-          <GenerateExcelButton data={[data]} />
+
           <ButtonPDF data={data} />
         </div>
       </div>

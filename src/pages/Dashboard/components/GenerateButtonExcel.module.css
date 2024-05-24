@@ -11,7 +11,7 @@
     justify-content: center;
     gap: 1rem;
     cursor: pointer;
-  
+  margin-left: 20%;
     background: linear-gradient(90deg, #217346 0%, #28A745 100%);
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
     border-radius: 25px;

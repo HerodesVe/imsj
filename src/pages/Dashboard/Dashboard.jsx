@@ -8,6 +8,7 @@ import { FaSearch } from "react-icons/fa";
 import Calendario from "../../components/Calendar/Calendar";
 import { FiCheck } from "react-icons/fi";
 import useAuthStore from '../../stores/useAuthStore';
+import GenerateExcelButton from "./components/GenerateButtonExcel";
 
 // Función para obtener la fecha de hoy en formato YYYY-MM-DD
 const getFormattedDate = (date) => {
@@ -124,6 +125,8 @@ const Dashboard = () => {
             <div className={styles.container__button}>
               <button onClick={callSoapService}> <FiCheck fontSize={"1rem"}/> Consultar </button>
             </div>
+            <GenerateExcelButton data={data} />
+
           </div>
           <TableComponent 
             columns={columns} 
