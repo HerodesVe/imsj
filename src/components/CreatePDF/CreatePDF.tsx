@@ -4,52 +4,61 @@ import 'jspdf-autotable';
 import logo from '../../../public/logo.png';
 import logobps from '../../../public/logo-bps.svg';
 import { FaFilePdf } from 'react-icons/fa';
-import style from './pdf.module.css'
+import style from './pdf.module.css';
+import moment from 'moment-timezone';
 
-
-interface GenerateStyledPDFProps {
-  data: {
-    paisDocumento?: {
-      codPais?: string;
-      descPais?: string;
-    };
-    tipoDocumento?: {
-      codTipoDocumento?: string;
-      descTipoDocumento?: string;
-    };
-    nroDocumento?: string;
-    nombreCompleto?: string;
-    tipoDocumentoMedico?: {
-      descTipoDocumento?: string;
-      codTipoDocumento?: string;
-    };
-    nombreCompletoMedico?: string;
-    infoEstado?: {
-      fechaVigencia?: string;
-      estado?: {
-        descEstado?: string;
-      };
-    };
-    fechaCertificacionDesde?: string;
-    fechaCertificacionHasta?: string;
-    fechaActualizacion?: string;
-    institucion?: {
-      descInstitucion?: string;
-    };
-    infoInteracion?: {
-      fechaEgresoInternacion?: string;
-      esInternacion?: boolean;
-    };
-    infoPatologia?: {
-      patologia?: string;
-      esExcepcion?: boolean;
-    };
-    infoReintegroAnticipado?: {
-      fechaReintegro?: string;
-      esReintegroAnticipado?: boolean;
+interface Data {
+  paisDocumento?: {
+    codPais?: string;
+    descPais?: string;
+  };
+  tipoDocumento?: {
+    codTipoDocumento?: string;
+    descTipoDocumento?: string;
+  };
+  nroDocumento?: string;
+  nombreCompleto?: string;
+  tipoDocumentoMedico?: {
+    descTipoDocumento?: string;
+    codTipoDocumento?: string;
+  };
+  nombreCompletoMedico?: string;
+  infoEstado?: {
+    fechaVigencia?: string;
+    estado?: {
+      descEstado?: string;
     };
   };
+  fechaCertificacionDesde?: string;
+  fechaCertificacionHasta?: string;
+  fechaActualizacion?: string;
+  institucion?: {
+    descInstitucion?: string;
+  };
+  infoInteracion?: {
+    fechaEgresoInternacion?: string;
+    esInternacion?: boolean;
+  };
+  infoPatologia?: {
+    patologia?: string;
+    esExcepcion?: boolean;
+  };
+  infoReintegroAnticipado?: {
+    fechaReintegro?: string;
+    esReintegroAnticipado?: boolean;
+  };
 }
+
+interface GenerateStyledPDFProps {
+  data: Data;
+}
+
+const timeZone = 'America/Montevideo';
+
+const formatDate = (dateString?: string) => {
+  if (!dateString) return "";
+  return moment.tz(dateString, timeZone).format('DD/MM/YYYY');
+};
 
 const GenerateStyledPDF: React.FC<GenerateStyledPDFProps> = ({ data }) => {
   const [logoBase64, setLogoBase64] = useState<string>('');
@@ -116,21 +125,21 @@ const GenerateStyledPDF: React.FC<GenerateStyledPDFProps> = ({ data }) => {
       ["Tipo de documento del médico", data.tipoDocumentoMedico?.descTipoDocumento || ""],
       ["Nro documento del médico", data.tipoDocumentoMedico?.codTipoDocumento || ""],
       ["Nombre completo del médico", data.nombreCompletoMedico || ""],
-      ["Fecha de vigencia", data.infoEstado?.fechaVigencia || ""],
-      ["Certificado desde", data.fechaCertificacionDesde || ""],
-      ["Certificado hasta", data.fechaCertificacionHasta || ""],
-      ["Fecha de actuación", data.fechaActualizacion || ""],
+      ["Fecha de vigencia", formatDate(data.infoEstado?.fechaVigencia)],
+      ["Certificado desde", formatDate(data.fechaCertificacionDesde)],
+      ["Certificado hasta", formatDate(data.fechaCertificacionHasta)],
+      ["Fecha de actuación", formatDate(data.fechaActualizacion)],
       ["Institución", data.institucion?.descInstitucion || ""],
       ["Estado", data.infoEstado?.estado?.descEstado || ""],
-      ["Fecha egreso int.", data.infoInteracion?.fechaEgresoInternacion || ""],
+      ["Fecha egreso int.", formatDate(data.infoInteracion?.fechaEgresoInternacion)],
       ["Patología", data.infoPatologia?.patologia || ""],
-      ["Fecha de Reintegro", data.infoReintegroAnticipado?.fechaReintegro || ""],
+      ["Fecha de Reintegro", formatDate(data.infoReintegroAnticipado?.fechaReintegro)],
       ["Reintegro anticipado", data.infoReintegroAnticipado?.esReintegroAnticipado ? "Sí" : "No"],
       ["Es Excepción", data.infoPatologia?.esExcepcion ? "Sí" : "No"],
       ["Internación", data.infoInteracion?.esInternacion ? "Sí" : "No"]
     ];
 
-    doc.autoTable({
+    (doc as any).autoTable({
       startY: marginTop,
       body: tableRows,
       theme: 'plain',

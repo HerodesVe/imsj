@@ -9,12 +9,24 @@ import Calendario from "../../components/Calendar/Calendar";
 import { FiCheck } from "react-icons/fi";
 import useAuthStore from '../../stores/useAuthStore';
 
+// Función para obtener la fecha de hoy en formato YYYY-MM-DD
+const getFormattedDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const today = new Date();
+const yesterday = new Date(today);
+yesterday.setDate(today.getDate() - 1);
+
 const initialValue = {
   nroOrganizacion: "0000003500665",
   idUsuario: "IMSJ_P",
-  fechaDesde: "2024-04-01",
-  fechaHasta: "2024-04-28"
-}
+  fechaDesde: getFormattedDate(yesterday), // Fecha de ayer
+  fechaHasta: getFormattedDate(today)      // Fecha de hoy
+};
 
 const Dashboard = () => {
   const [selectedData, setSelectedData] = useState(null);

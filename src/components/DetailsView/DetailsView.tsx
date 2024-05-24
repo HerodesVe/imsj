@@ -1,3 +1,4 @@
+// DetailsView.tsx
 import React from "react";
 import { FaFilePdf } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -5,11 +6,61 @@ import styles from "./DetailsView.module.css";
 import InputField from "../InputField/InputField";
 import RadioInput from "../RadioInput/RadioInput";
 import ButtonPDF from "../CreatePDF/CreateButton";
+import moment from 'moment-timezone';
+
+interface Data {
+  paisDocumento?: {
+    codPais?: string;
+    descPais?: string;
+  };
+  tipoDocumento?: {
+    codTipoDocumento?: string;
+    descTipoDocumento?: string;
+  };
+  nroDocumento?: string;
+  nombreCompleto?: string;
+  tipoDocumentoMedico?: {
+    descTipoDocumento?: string;
+    codTipoDocumento?: string;
+  };
+  nombreCompletoMedico?: string;
+  infoEstado?: {
+    fechaVigencia?: string;
+    estado?: {
+      descEstado?: string;
+    };
+  };
+  fechaCertificacionDesde?: string;
+  fechaCertificacionHasta?: string;
+  fechaActualizacion?: string;
+  institucion?: {
+    descInstitucion?: string;
+  };
+  infoInteracion?: {
+    fechaEgresoInternacion?: string;
+    esInternacion?: boolean;
+  };
+  infoPatologia?: {
+    patologia?: string;
+    esExcepcion?: boolean;
+  };
+  infoReintegroAnticipado?: {
+    fechaReintegro?: string;
+    esReintegroAnticipado?: boolean;
+  };
+}
 
 interface DetailsViewProps {
-  data: { [key: string]: any };
+  data: Data;
   onBack: () => void;
 }
+
+const timeZone = 'America/Montevideo';
+
+const formatDate = (dateString?: string) => {
+  if (!dateString) return "";
+  return moment.tz(dateString, timeZone).format('DD/MM/YYYY');
+};
 
 const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
 
@@ -64,21 +115,21 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
           />
           <InputField
             label="Fecha de vigencia"
-            value={data?.infoEstado?.fechaVigencia || ""}
+            value={formatDate(data?.infoEstado?.fechaVigencia)}
           />
         </div>
         <div style={{ display: "flex", gap: "20px", width: "70%" }}>
           <InputField
             label="Certificado desde"
-            value={data?.fechaCertificacionDesde || ""}
+            value={formatDate(data?.fechaCertificacionDesde)}
           />
           <InputField
             label="Certificado hasta"
-            value={data?.fechaCertificacionHasta || ""}
+            value={formatDate(data?.fechaCertificacionHasta)}
           />
           <InputField
             label="Fecha de actuación"
-            value={data?.fechaActualizacion || ""}
+            value={formatDate(data?.fechaActualizacion)}
           />
           <InputField
             label="Institución"
@@ -93,32 +144,17 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
           />
           <InputField
             label="Fecha egreso int."
-            value={data?.infoInteracion?.fechaEgresoInternacion || ""}
+            value={formatDate(data?.infoInteracion?.fechaEgresoInternacion)}
           />
           <InputField
             label="Patología"
             value={data?.infoPatologia?.patologia || ""}
           />
         </div>
-        {/* <div style={{ display: "flex", gap: "20px", width: "70%" }}>
-          <RadioInput
-            options={[
-              {
-                label: "Es Excepción",
-                checked: data?.infoPatologia?.esExcepcion || false,
-              },
-              {
-                label: "Internación",
-                checked: data?.infoInteracion?.esInternacion || false,
-              },
-            ]}
-          />
-        </div> */}
-
         <div style={{ display: "flex", gap: "20px", width: "50%" }}>
           <InputField
             label="Fecha de Reintegro"
-            value={data?.infoReintegroAnticipado?.fechaReintegro || ""}
+            value={formatDate(data?.infoReintegroAnticipado?.fechaReintegro)}
           />
           <RadioInput
             options={[
@@ -137,7 +173,6 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
               },
             ]}
           />
-          
         </div>
         <ButtonPDF data={data}/>
       </div>
