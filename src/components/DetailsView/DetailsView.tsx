@@ -4,6 +4,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import styles from "./DetailsView.module.css";
 import InputField from "../InputField/InputField";
 import RadioInput from "../RadioInput/RadioInput";
+import ButtonPDF from "../CreatePDF/CreateButton";
 
 interface DetailsViewProps {
   data: { [key: string]: any };
@@ -138,13 +139,7 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
           />
           
         </div>
-        <div className={styles.container__button}>
-
-        <button className={styles.exportButton}>
-          <FaFilePdf size={25} color="white" />
-          Exportar a PDF
-        </button>
-        </div>
+        <ButtonPDF data={data}/>
       </div>
     </div>
   );

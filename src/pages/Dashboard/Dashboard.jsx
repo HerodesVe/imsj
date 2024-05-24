@@ -6,6 +6,7 @@ import DetailsView from "../../components/DetailsView/DetailsView";
 import { FaSearch } from "react-icons/fa";
 import Calendario from "../../components/Calendar/Calendar";
 import { FiCheck } from "react-icons/fi";
+import useAuthStore from '../../stores/useAuthStore';
 
 const initialValue = {
   nroOrganizacion: "0000003500665",
@@ -18,6 +19,7 @@ const Dashboard = () => {
   const [selectedData, setSelectedData] = useState(null);
   const [filter, setFilter] = useState(initialValue);
   const [data, setData] = useState([]);
+  const { jwt } = useAuthStore(); // Obtener el JWT del store de autenticación
 
   const columns = [
     { campo: "tipoDocumento.descTipoDocumento", label: "Tipo de Documento" },
@@ -43,7 +45,15 @@ const Dashboard = () => {
 
   const callSoapService = async () => {
     try {
-      const response = await axios.post(`http://localhost:8080/api/sendSoapRequest`, filter);
+      const response = await axios.post(
+        `http://hostnick.ddns.net:6010/uruguay/sendSoapRequest`,
+        filter,
+        {
+          headers: {
+            Authorization: jwt, // Incluir el JWT en los encabezados
+          },
+        }
+      );
       const certData = response.data["soap:Envelope"]["soap:Body"]["ns2:obtenerCertificacionesOrganizacionResponse"]["resultObtenerCertificacionesOrganizacion"]["colCertificaciones"];
       setData(certData);
     } catch (error) {

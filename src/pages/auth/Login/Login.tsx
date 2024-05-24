@@ -36,8 +36,9 @@ const Login: React.FC = () => {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     const response = await postRequest(formData);
+    console.log(response);  // Añadir este log
     if (response) {
-      const { jwt, user } = response;
+      const { jwt, user } = response.data;
       setAuth(jwt, user);
       toast.success('Login exitoso');
       navigate('/dashboard');
@@ -83,8 +84,6 @@ const Login: React.FC = () => {
           <a href="/register" className={styles.link}>Crea tu cuenta</a>
         </div>
       </div>
-
-      <ButtonPDF />
 
     </div>
   );

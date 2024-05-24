@@ -1,5 +1,6 @@
 import React from 'react';
 import GenerateStyledPDF from './CreatePDF'; // Ajusta la ruta según tu estructura de carpetas
+import style from './pdf.module.css'
 
 interface Data {
   nombreCompleto: string;
@@ -20,29 +21,13 @@ interface Data {
   reintegroAnticipado: string;
 }
 
-const ButtonPDF: React.FC = () => {
-  const data: Data = {
-    nombreCompleto: 'Jose Manuel Hernandez Vasquez',
-    tipoDocumento: 'DNI',
-    nroDocumento: '303825555',
-    pais: 'Peru',
-    codPais: '555',
-    certificadoDesde: '07/05/2024',
-    certificadoHasta: '07/05/2026',
-    fechaActualizacion: '07/05/2024',
-    institucion: 'Institucion',
-    estado: 'Lima',
-    fechaIngreso: '07/05/2024',
-    patologia: 'Ninguna',
-    esExcepcion: 'Si',
-    internacion: 'No',
-    fechaReintegro: '07/05/2024',
-    reintegroAnticipado: 'No',
-  };
+interface ButtonPDFProps {
+  data: Data;
+}
 
+const ButtonPDF: React.FC<ButtonPDFProps> = ({ data }) => {
   return (
-    <div className="App">
-      <h1>Generate and Download PDF Example</h1>
+    <div className={style.button}>
       <GenerateStyledPDF data={data} />
     </div>
   );

@@ -28,7 +28,6 @@ const App: React.FC = () => {
         <Route path="/dashboard" element={<MainStructure><Dashboard /></MainStructure>} />
         <Route path="/approved-user" element={<MainStructure><ApproveUser /></MainStructure>} />
         <Route path="/my-project" element={<MainStructure><MyProject /></MainStructure>} />
-        {/* Puedes agregar más rutas protegidas aquí */}
       </Route>
     </Routes>
   );

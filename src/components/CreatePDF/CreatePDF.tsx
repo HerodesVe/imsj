@@ -3,6 +3,9 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import logo from '../../../public/logo.png';
 import logobps from '../../../public/logo-bps.svg';
+import { FaFilePdf } from 'react-icons/fa';
+import style from './pdf.module.css'
+
 
 interface GenerateStyledPDFProps {
   data: {
@@ -155,9 +158,10 @@ const GenerateStyledPDF: React.FC<GenerateStyledPDFProps> = ({ data }) => {
   };
 
   return (
-    <div>
-      <button onClick={generatePDF} disabled={!logoBase64 || !logobpsBase64}>
-        Download PDF
+    <div className={style.container__button}>   
+      <button className={style.exportButton} onClick={generatePDF} disabled={!logoBase64 || !logobpsBase64}>
+        <FaFilePdf size={25} color="white" />
+        Exportar a PDF
       </button>
     </div>
   );
