@@ -1,16 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import styles from './Login.module.css';
-import vector from "../../../assets/vectorRigth.svg"
+import vector from "../../../assets/vectorRigth.svg";
+import useAuthStore from '../../../stores/useAuthStore';
+import usePostRequest from '../../../hook/usePostRequest';
+
+interface LoginResponse {
+  jwt: string;
+  user: {
+    id: string;
+    email: string;
+    isAdmin: boolean;
+    isVerified: boolean;
+    name: string;
+    password: string;
+  };
+}
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { setAuth } = useAuthStore();
+  const { postRequest, loading } = usePostRequest<LoginResponse>('/login');
+  const [formData, setFormData] = useState({ email: '', password: '' });
 
-  const handleLogin = (event: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    // Aquí puedes agregar la lógica de autenticación
-    navigate('/dashboard'); // Redirige a la página del dashboard después de hacer login
+    const response = await postRequest(formData);
+    if (response) {
+      const { jwt, user } = response;
+      setAuth(jwt, user);
+      toast.success('Login exitoso');
+      navigate('/dashboard');
+    } else {
+      toast.error('Error en el login. Por favor, intente nuevamente.');
+    }
   };
 
   return (
@@ -19,17 +51,31 @@ const Login: React.FC = () => {
         <img src={vector} alt="Background Vectors" />
       </div>
       <div className={styles.formContainer}>
-        <h2>User Login</h2>
+        <h2>Login de Usuario</h2>
         <form className={styles.form} onSubmit={handleLogin}>
           <div className={styles.inputGroup}>
             <FaUser className={styles.icon} />
-            <input type="text" placeholder="Username" />
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Correo Electrónico" 
+              value={formData.email} 
+              onChange={handleChange} 
+            />
           </div>
           <div className={styles.inputGroup}>
             <FaLock className={styles.icon} />
-            <input type="password" placeholder="Password" />
+            <input 
+              type="password" 
+              name="password" 
+              placeholder="Contraseña" 
+              value={formData.password} 
+              onChange={handleChange} 
+            />
           </div>
-          <button className={styles.loginButton} type="submit">Login</button>
+          <button className={styles.loginButton} type="submit" disabled={loading}>
+            {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+          </button>
         </form>
         <div className={styles.footer}>
           <a href="/forgot-password" className={styles.link}>¿Olvidaste tu contraseña?</a>
