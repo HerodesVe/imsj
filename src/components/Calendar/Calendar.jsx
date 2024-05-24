@@ -1,6 +1,8 @@
-import {Calendar} from "primereact/calendar";
+import { Calendar } from "primereact/calendar";
 import defaultStyle from "./Calendar.module.css"; // Asegúrate de importar los estilos adecuados
-import {addLocale} from "primereact/api";
+import { addLocale } from "primereact/api";
+import moment from 'moment';
+
 export default function InputCalendar({
   label,
   style,
@@ -62,6 +64,11 @@ export default function InputCalendar({
     clear: "Limpiar",
   });
 
+  const handleDateChange = (e) => {
+    const formattedDate = moment(e.value).format('YYYY-MM-DD'); // Formato para almacenar
+    onChange({ target: { name, value: formattedDate } });
+  };
+
   return (
     <div className={defaultStyle.InputTextalingCalendar} style={style}>
       {label && (
@@ -71,13 +78,14 @@ export default function InputCalendar({
       )}
       <Calendar
         name={name}
-        value={value}
-        onChange={onChange}
+        value={moment(value).toDate()} // Convertir el valor a objeto Date
+        onChange={handleDateChange}
         placeholder={placeholder}
         locale="es"
         className={defaultStyle.InputalingCalendar}
         showIcon
         inputClassName={defaultStyle.CalendarInput}
+        dateFormat="dd/mm/yy" // Establecer el formato de fecha visual
         {...otherProps} // Pasa cualquier otra prop adicional al componente Calendar
       />
     </div>

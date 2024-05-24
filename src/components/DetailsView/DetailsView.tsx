@@ -86,10 +86,22 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
           <InputField label="Nombre Completo" value={data?.nombreCompleto || ""} />
         </div>
         <div style={{ display: "flex", gap: "20px", width: "80%" }}>
-          <InputField label="Tipo de documento del médico" value={data?.tipoDocumentoMedico?.descTipoDocumento || ""} />
-          <InputField label="Nro documento del médico" value={data?.tipoDocumentoMedico?.codTipoDocumento || ""} />
-          <InputField label="Nombre completo del médico" value={data?.nombreCompletoMedico || ""} />
-          <InputField label="Fecha de vigencia" value={formatDate(data?.infoEstado?.fechaVigencia)} />
+          <InputField
+            label="Tipo Doc. Médico"
+            value={data?.tipoDocumentoMedico?.descTipoDocumento || ""}
+          />
+          <InputField
+            label="Nro documento del médico"
+            value={data?.tipoDocumentoMedico?.codTipoDocumento || ""}
+          />
+          <InputField
+            label="Nombre completo del médico"
+            value={data?.nombreCompletoMedico || ""}
+          />
+          <InputField
+            label="Fecha de vigencia"
+            value={formatDate(data?.infoEstado?.fechaVigencia)}
+          />
         </div>
         <div style={{ display: "flex", gap: "20px", width: "70%" }}>
           <InputField label="Certificado desde" value={formatDate(data?.fechaCertificacionDesde)} />
