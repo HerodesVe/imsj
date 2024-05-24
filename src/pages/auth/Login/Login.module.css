@@ -107,3 +107,27 @@
     color: #0056b3;
   }
   
+  .container__modal h2 {
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .container__modal p {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .container__button button {
+    padding: 0.8em 1.3rem;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .container__button {
+    display: flex;
+    justify-content: end;
+  }

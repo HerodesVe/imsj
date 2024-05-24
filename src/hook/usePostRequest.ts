@@ -14,19 +14,19 @@ const usePostRequest = <T,>(endpoint: string) => {
     loading: false,
   });
 
-  const postRequest = async (body: any): Promise<{ success: boolean; data?: T }> => {
+  const postRequest = async (body: any): Promise<T | null> => {
     setState({ data: null, error: null, loading: true });
     try {
       const response = await axiosInstance.post<T>(endpoint, body);
       setState({ data: response.data, error: null, loading: false });
-      return { success: true, data: response.data };
+      return response.data;
     } catch (error: any) {
       setState({
         data: null,
         error: error.response?.data?.message || error.message,
         loading: false,
       });
-      return { success: false };
+      return null;
     }
   };
 

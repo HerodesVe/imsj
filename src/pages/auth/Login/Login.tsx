@@ -6,7 +6,7 @@ import styles from './Login.module.css';
 import vector from "../../../assets/vectorRigth.svg";
 import useAuthStore from '../../../stores/useAuthStore';
 import usePostRequest from '../../../hook/usePostRequest';
-import ButtonPDF from '../../../components/CreatePDF/CreateButton';
+import Modal from '../../../components/Modal/Modal'; // Importar el componente Modal
 
 interface LoginResponse {
   jwt: string;
@@ -25,6 +25,7 @@ const Login: React.FC = () => {
   const { setAuth } = useAuthStore();
   const { postRequest, loading } = usePostRequest<LoginResponse>('/login');
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -35,16 +36,27 @@ const Login: React.FC = () => {
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    const response = await postRequest(formData);
-    console.log(response);  // Añadir este log
-    if (response) {
-      const { jwt, user } = response.data;
-      setAuth(jwt, user);
-      toast.success('Login exitoso');
-      navigate('/dashboard');
-    } else {
+    try {
+      const response = await postRequest(formData);
+      if (response) {
+        const { jwt, user } = response;
+        if (user.isVerified) {
+          setAuth(jwt, user);
+          toast.success('Login exitoso');
+          navigate('/dashboard');
+        } else {
+          setModalIsOpen(true); // Mostrar el modal si el usuario no está verificado
+        }
+      } else {
+        toast.error('Error en el login. Por favor, intente nuevamente.');
+      }
+    } catch (error) {
       toast.error('Error en el login. Por favor, intente nuevamente.');
     }
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   return (
@@ -85,6 +97,20 @@ const Login: React.FC = () => {
         </div>
       </div>
 
+      <Modal isOpen={modalIsOpen} onClose={closeModal}>
+        <div className={styles.container__modal}>
+          
+          <h2>Verificación Pendiente</h2>
+          <p>Tu cuenta aún no ha sido verificada. Por favor, contacta al administrador.</p>
+          <div className={styles.container__button}>
+            <button onClick={closeModal} className={`${styles.modalButton} ${styles.modalButtonAccept}`}>
+            Aceptar
+          </button>
+          </div>
+          
+        </div>
+
+      </Modal>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Dashboard from './pages/Dashboard/Dashboard';
 import MyProject from './pages/MyProject';
 import Login from './pages/auth/Login/Login';
@@ -9,25 +9,28 @@ import ApproveUser from './pages/Usuarios/ApproveUser';
 import useAuthStore from './stores/useAuthStore';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
-
 const App: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { jwt } = useAuthStore();
 
   useEffect(() => {
-    if (jwt) {
+    // Only redirect if the user is not on a protected route
+    if (jwt && (location.pathname === '/' || location.pathname === '/register')) {
       navigate('/dashboard');
     }
-  }, [jwt, navigate]);
+  }, [jwt, navigate, location]);
 
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route element={<ProtectedRoute />}>
+      <Route element={<ProtectedRoute allowedRoles={[true, false]} />}>
         <Route path="/dashboard" element={<MainStructure><Dashboard /></MainStructure>} />
-        <Route path="/approved-user" element={<MainStructure><ApproveUser /></MainStructure>} />
         <Route path="/my-project" element={<MainStructure><MyProject /></MainStructure>} />
+      </Route>
+      <Route element={<ProtectedRoute allowedRoles={[true]} />}>
+        <Route path="/approved-user" element={<MainStructure><ApproveUser /></MainStructure>} />
       </Route>
     </Routes>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from './Modal.module.css';
+import ReactDOM from 'react-dom';
+import styles from './Modal.module.css'; // Asegúrate de tener los estilos necesarios
 
 interface ModalProps {
   isOpen: boolean;
@@ -10,13 +11,18 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
-  return (
+  return ReactDOM.createPortal(
     <div className={styles.modalOverlay}>
-      <div className={styles.modalContent}>
-        <button className={styles.closeButton} onClick={onClose}>&times;</button>
-        {children}
+      <div className={styles.modal}>
+        <button className={styles.closeButton} onClick={onClose}>
+          &times;
+        </button>
+        <div className={styles.modalContent}>
+          {children}
+        </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

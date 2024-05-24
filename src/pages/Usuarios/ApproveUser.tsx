@@ -1,25 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { FaCheck } from "react-icons/fa";
 import TableComponent from "../../components/TableComponent/TableComponent";
 import Modal from "../../components/Modal/Modal";
 import styles from "./ApproveUser.module.css";
-
-const mockData = [
-  { id: 1, nombre: "John Doe", email: "john@example.com", role: "User" },
-  { id: 2, nombre: "Jane Smith", email: "jane@example.com", role: "Admin" },
-  { id: 3, nombre: "Sam Wilson", email: "sam@example.com", role: "User" },
-  // Añade más usuarios si lo deseas
-];
+import useAuthStore from "../../stores/useAuthStore";
 
 const columns = [
-  { campo: "nombre", label: "Nombre" },
+  { campo: "name", label: "Nombre" },
   { campo: "email", label: "Email" },
 ];
 
 const ApproveUser: React.FC = () => {
-  const [data, setData] = useState(mockData);
+  const [data, setData] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
+  const { jwt } = useAuthStore(); // Obtener el JWT del store de autenticación
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("http://hostnick.ddns.net:6010/user", {
+        headers: {
+          Authorization: jwt, // Incluir el JWT en los encabezados
+        },
+      });
+
+      // Filtrar usuarios que no están verificados
+      const unverifiedUsers = response.data.filter((user: any) => !user.isVerified);
+      setData(unverifiedUsers);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, [jwt]);
 
   const openModal = (user: { [key: string]: any }) => {
     setSelectedUser(user);
@@ -30,9 +46,25 @@ const ApproveUser: React.FC = () => {
     setModalIsOpen(false);
   };
 
-  const approveUser = () => {
-    console.log("Usuario aprobado:", selectedUser);
-    closeModal();
+  const approveUser = async () => {
+    if (selectedUser) {
+      try {
+        await axios.patch(
+          `http://hostnick.ddns.net:6010/user/${selectedUser.id}`,
+          { isVerified: true },
+          {
+            headers: {
+              Authorization: jwt, // Incluir el JWT en los encabezados
+            },
+          }
+        );
+        console.log("Usuario aprobado:", selectedUser);
+        closeModal();
+        fetchUsers(); // Volver a obtener los datos de los usuarios
+      } catch (error) {
+        console.error("Error approving user:", error);
+      }
+    }
   };
 
   const renderButton = (row: { [key: string]: any }) => (
@@ -58,7 +90,7 @@ const ApproveUser: React.FC = () => {
           </div>
           <h2>Confirmación</h2>
         </div>
-        <p>¿Estás seguro de que quieres aprobar a {selectedUser?.nombre}?</p>
+        <p>¿Estás seguro de que quieres aprobar a {selectedUser?.name}?</p>
         <div
           style={{
             display: "flex",
