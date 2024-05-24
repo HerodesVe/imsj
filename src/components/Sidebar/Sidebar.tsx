@@ -44,7 +44,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: any) => {
           </Link>
         ))}
       </nav>
-      <button className={styles.logoutButton} onClick={handleLogout}> <IoIosLogOut />  Cerrar Sesión</button>
+      <button className={styles.logoutButton} onClick={handleLogout}> <IoIosLogOut fontSize={"1.2rem"} />  Cerrar Sesión</button>
     </div>
   );
 };

@@ -8,13 +8,11 @@ import { FaSearch } from "react-icons/fa";
 import Calendario from "../../components/Calendar/Calendar";
 import { FiCheck } from "react-icons/fi";
 import useAuthStore from '../../stores/useAuthStore';
+import moment from 'moment-timezone';
 
 // Función para obtener la fecha de hoy en formato YYYY-MM-DD
 const getFormattedDate = (date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  return moment(date).format('YYYY-MM-DD');
 };
 
 const today = new Date();
@@ -39,8 +37,10 @@ const Dashboard = () => {
     { campo: "paisDocumento.descPais", label: "País Documento" },
     { campo: "nroDocumento", label: "Documento" },
     { campo: "nombreCompleto", label: "Nombre Completo" },
-    { campo: "fechaCertificacionDesde", label: "Certificado Desde" },
+    { campo: "fechaCertificacionDesde", label: "Certificado Desde", format: (value) => moment(value).format('DD/MM/YYYY') },
   ];
+
+  console.log(data)
 
   const handleViewClick = (row) => {
     setSelectedData(row);
@@ -76,7 +76,10 @@ const Dashboard = () => {
       }
 
       const certData = response.data["soap:Envelope"]["soap:Body"]["ns2:obtenerCertificacionesOrganizacionResponse"]["resultObtenerCertificacionesOrganizacion"]["colCertificaciones"];
-      setData(certData || []);
+
+      // Verificar si certData es un objeto y convertirlo a array si es necesario
+      const certDataArray = Array.isArray(certData) ? certData : [certData];
+      setData(certDataArray || []);
     } catch (error) {
       console.error(error);
       toast.error('Error en la solicitud. Por favor, intente nuevamente.');

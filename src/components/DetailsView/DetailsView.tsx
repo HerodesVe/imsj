@@ -102,7 +102,7 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
         </div>
         <div style={{ display: "flex", gap: "20px", width: "80%" }}>
           <InputField
-            label="Tipo de documento del médico"
+            label="Tipo Doc. Médico"
             value={data?.tipoDocumentoMedico?.descTipoDocumento || ""}
           />
           <InputField

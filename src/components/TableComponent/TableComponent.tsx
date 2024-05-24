@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import styles from './TableComponent.module.css';
+import moment from 'moment';
 
 interface Column {
   campo: string;
   label: string;
+  format?: (value: any) => string;
 }
 
 interface TableComponentProps {
@@ -42,9 +44,11 @@ const TableComponent: React.FC<TableComponentProps> = ({ columns, data, renderBu
         <tbody>
           {currentPageData.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              {columns.map((column, colIndex) => (
-                <td key={colIndex}>{getNestedValue(row, column.campo)}</td>
-              ))}
+              {columns.map((column, colIndex) => {
+                const value = getNestedValue(row, column.campo);
+                const formattedValue = column.format ? column.format(value) : value;
+                return <td key={colIndex}>{formattedValue}</td>;
+              })}
               {renderButton && <td>{renderButton(row)}</td>}
             </tr>
           ))}
