@@ -6,6 +6,7 @@ import styles from './Login.module.css';
 import vector from "../../../assets/vectorRigth.svg";
 import useAuthStore from '../../../stores/useAuthStore';
 import usePostRequest from '../../../hook/usePostRequest';
+import ButtonPDF from '../../../components/CreatePDF/CreateButton';
 
 interface LoginResponse {
   jwt: string;
@@ -82,6 +83,9 @@ const Login: React.FC = () => {
           <a href="/register" className={styles.link}>Crea tu cuenta</a>
         </div>
       </div>
+
+      <ButtonPDF />
+
     </div>
   );
 };
