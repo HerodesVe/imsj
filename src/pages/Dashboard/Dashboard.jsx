@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify"; // Importar toast
 import TableComponent from "../../components/TableComponent/TableComponent";
 import styles from "./Dashboard.module.css";
 import DetailsView from "../../components/DetailsView/DetailsView";
@@ -54,10 +55,19 @@ const Dashboard = () => {
           },
         }
       );
+
+      // Verificar si hay errores en la respuesta
+      const errores = response.data["soap:Envelope"]["soap:Body"]["ns2:obtenerCertificacionesOrganizacionResponse"]["resultObtenerCertificacionesOrganizacion"]["colErrores"];
+      if (errores) {
+        toast.error(`Error: ${errores.descripcion}`);
+        return;
+      }
+
       const certData = response.data["soap:Envelope"]["soap:Body"]["ns2:obtenerCertificacionesOrganizacionResponse"]["resultObtenerCertificacionesOrganizacion"]["colCertificaciones"];
-      setData(certData);
+      setData(certData || []);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast.error('Error en la solicitud. Por favor, intente nuevamente.');
     }
   };
 
