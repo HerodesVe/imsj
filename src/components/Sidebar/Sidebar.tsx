@@ -5,6 +5,7 @@ import { MdMenu } from 'react-icons/md';
 import { routes } from '../../data/routes';
 import logo from '../../../public/logo.png';
 import useAuthStore from '../../stores/useAuthStore'; // Importar el store de autenticación
+import { IoIosLogOut } from "react-icons/io";
 
 const Sidebar = ({ isOpen, toggleSidebar }: any) => {
   const location = useLocation();
@@ -43,7 +44,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: any) => {
           </Link>
         ))}
       </nav>
-      <button className={styles.logoutButton} onClick={handleLogout}>Cerrar Sesión</button>
+      <button className={styles.logoutButton} onClick={handleLogout}> <IoIosLogOut />  Cerrar Sesión</button>
     </div>
   );
 };
