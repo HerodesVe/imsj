@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const { jwt } = useAuthStore();
 
   useEffect(() => {
-    // Only redirect if the user is not on a protected route
+    // Solo redirige si el usuario no está en una ruta protegida
     if (jwt && (location.pathname === '/' || location.pathname === '/register')) {
       navigate('/dashboard');
     }

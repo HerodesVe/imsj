@@ -70,3 +70,30 @@
     font-size: 1.8rem;
     margin: 1rem 1rem;
   }
+
+  .filterContainer {
+    display: flex;
+    gap: 30px;
+    padding: 1rem;
+  }
+
+  .filter,
+  .active_filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 113px;
+    height: 40px;
+    text-align: center;
+    color: #0047FF;
+    font-weight: 700;
+    padding: 0.2rem;
+    cursor: pointer;
+    border: 2px solid #0047FF; 
+    border-radius: 10px;
+  }
+
+  .active_filter {
+    background-color: #0047FF;
+    color: white;
+  }

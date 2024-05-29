@@ -1,4 +1,3 @@
-// DetailsView.tsx
 import React from "react";
 import { FaFilePdf } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -25,6 +24,7 @@ interface Data {
     codTipoDocumento?: string;
   };
   nombreCompletoMedico?: string;
+  nroDocumentoMedico?: string;
   infoEstado?: {
     fechaVigencia?: string;
     estado?: {
@@ -42,7 +42,7 @@ interface Data {
     esInternacion?: boolean;
   };
   infoPatologia?: {
-    patologia?: string;
+
     esExcepcion?: boolean;
   };
   infoReintegroAnticipado?: {
@@ -92,7 +92,7 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
           />
           <InputField
             label="Nro documento del médico"
-            value={data?.tipoDocumentoMedico?.codTipoDocumento || ""}
+            value={data?.nroDocumentoMedico || ""}
           />
           <InputField
             label="Nombre completo del médico"
@@ -107,13 +107,17 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
           <InputField label="Certificado desde" value={formatDate(data?.fechaCertificacionDesde)} />
           <InputField label="Certificado hasta" value={formatDate(data?.fechaCertificacionHasta)} />
           <InputField label="Fecha de actuación" value={formatDate(data?.fechaActualizacion)} />
-          <InputField label="Institución" value={data?.institucion?.descInstitucion || ""} />
+          <InputField 
+            label="Institución" 
+            value={data?.institucion?.descInstitucion || ""} 
+            className={styles.institucionInput}  // Aplicando la clase CSS personalizada
+          />
         </div>
 
         <div style={{ display: "flex", gap: "20px", width: "60%" }}>
           <InputField label="Estado" value={data?.infoEstado?.estado?.descEstado || ""} />
           <InputField label="Fecha egreso int." value={formatDate(data?.infoInteracion?.fechaEgresoInternacion)} />
-          <InputField label="Patología" value={data?.infoPatologia?.patologia || ""} />
+          <InputField label="Patología" value={data?.infoPatologia?.esExcepcion ? "Sí" : "No"} />
         </div>
         <div style={{ display: "flex", gap: "20px", width: "50%" }}>
           <InputField label="Fecha de Reintegro" value={formatDate(data?.infoReintegroAnticipado?.fechaReintegro)} />
@@ -141,7 +145,6 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
             gap: "20px",
           }}
         >
-
           <ButtonPDF data={data} />
         </div>
       </div>

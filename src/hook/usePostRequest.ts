@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axiosInstance from '../connections/mainApi';
+import axiosInstance from '../connections/axiosInstance';
 
 interface PostRequestState<T> {
   data: T | null;

@@ -23,7 +23,7 @@ interface LoginResponse {
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { setAuth } = useAuthStore();
-  const { postRequest, loading } = usePostRequest<LoginResponse>('/login');
+  const { data, error, loading, postRequest } = usePostRequest<LoginResponse>('/login');
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -47,10 +47,10 @@ const Login: React.FC = () => {
         } else {
           setModalIsOpen(true); // Mostrar el modal si el usuario no está verificado
         }
-      } else {
-        toast.error('Error en el login. Por favor, intente nuevamente.');
+      } else if (error) {
+        toast.error(`Error en el login: ${error}`);
       }
-    } catch (error) {
+    } catch (err) {
       toast.error('Error en el login. Por favor, intente nuevamente.');
     }
   };
@@ -99,17 +99,14 @@ const Login: React.FC = () => {
 
       <Modal isOpen={modalIsOpen} onClose={closeModal}>
         <div className={styles.container__modal}>
-          
           <h2>Verificación Pendiente</h2>
           <p>Tu cuenta aún no ha sido verificada. Por favor, contacta al administrador.</p>
           <div className={styles.container__button}>
             <button onClick={closeModal} className={`${styles.modalButton} ${styles.modalButtonAccept}`}>
-            Aceptar
-          </button>
+              Aceptar
+            </button>
           </div>
-          
         </div>
-
       </Modal>
     </div>
   );
