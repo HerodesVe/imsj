@@ -17,6 +17,7 @@ interface Data {
     descTipoDocumento?: string;
   };
   nroDocumento?: string;
+  nroDocumentoMedico?: string;
   nombreCompleto?: string;
   tipoDocumentoMedico?: {
     descTipoDocumento?: string;
@@ -63,6 +64,7 @@ const formatDate = (dateString?: string) => {
 const GenerateStyledPDF: React.FC<GenerateStyledPDFProps> = ({ data }) => {
   const [logoBase64, setLogoBase64] = useState<string>('');
   const [logobpsBase64, setLogobpsBase64] = useState<string>('');
+  const [currentDate, setCurrentDate] = useState<string>('');
 
   useEffect(() => {
     const convertToBase64 = (url: string, callback: (base64: string) => void) => {
@@ -82,6 +84,10 @@ const GenerateStyledPDF: React.FC<GenerateStyledPDFProps> = ({ data }) => {
 
     convertToBase64(logo, setLogoBase64);
     convertToBase64(logobps, setLogobpsBase64);
+    
+    // Set current date
+    const now = moment.tz(timeZone).format('DD/MM/YYYY');
+    setCurrentDate(now);
   }, []);
 
   const generatePDF = () => {
@@ -95,7 +101,7 @@ const GenerateStyledPDF: React.FC<GenerateStyledPDFProps> = ({ data }) => {
 
     // Añadir fecha
     doc.setFontSize(12);
-    doc.text("23/05/2024", 170, 20);
+    doc.text(currentDate, 170, 20);
 
     // Título centrado horizontalmente con margen superior
     doc.setFontSize(25);
@@ -123,7 +129,7 @@ const GenerateStyledPDF: React.FC<GenerateStyledPDFProps> = ({ data }) => {
       ["Nro Documento", data.nroDocumento || ""],
       ["Nombre Completo", data.nombreCompleto || ""],
       ["Tipo de documento del médico", data.tipoDocumentoMedico?.descTipoDocumento || ""],
-      ["Nro documento del médico", data.tipoDocumentoMedico?.codTipoDocumento || ""],
+      ["Nro documento del médico", data?.nroDocumentoMedico || ""],
       ["Nombre completo del médico", data.nombreCompletoMedico || ""],
       ["Fecha de vigencia", formatDate(data.infoEstado?.fechaVigencia)],
       ["Certificado desde", formatDate(data.fechaCertificacionDesde)],

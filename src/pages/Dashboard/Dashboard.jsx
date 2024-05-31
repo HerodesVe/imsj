@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify"; // Importar toast
+import { toast } from "react-toastify";
 import TableComponent from "../../components/TableComponent/TableComponent";
 import styles from "./Dashboard.module.css";
 import DetailsView from "../../components/DetailsView/DetailsView";
@@ -31,6 +31,7 @@ const Dashboard = () => {
   const [selectedData, setSelectedData] = useState(null);
   const [filter, setFilter] = useState(initialValue);
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false); // Nuevo estado para el loader
   const { jwt } = useAuthStore(); // Obtener el JWT del store de autenticación
 
   const columns = [
@@ -40,8 +41,6 @@ const Dashboard = () => {
     { campo: "nombreCompleto", label: "Nombre Completo" },
     { campo: "fechaCertificacionDesde", label: "Certificado Desde", format: (value) => moment(value).format('DD/MM/YYYY') },
   ];
-
-  console.log(data)
 
   const handleViewClick = (row) => {
     setSelectedData(row);
@@ -58,6 +57,7 @@ const Dashboard = () => {
   );
 
   const callSoapService = async () => {
+    setIsLoading(true); // Iniciar el loader
     try {
       const response = await axios.post(
         `http://hostnick.ddns.net:6010/uruguay/sendSoapRequest`,
@@ -84,6 +84,8 @@ const Dashboard = () => {
     } catch (error) {
       console.error(error);
       toast.error('Error en la solicitud. Por favor, intente nuevamente.');
+    } finally {
+      setIsLoading(false); // Finalizar el loader
     }
   };
 
@@ -129,13 +131,16 @@ const Dashboard = () => {
               <button onClick={callSoapService}> <FiCheck fontSize={"1rem"}/> Consultar </button>
             <GenerateExcelButton data={data} />
             </div>
-
           </div>
-          <TableComponent 
-            columns={columns} 
-            data={data} 
-            renderButton={renderButton} 
-          />
+          {isLoading ? (
+            <div className={styles.loader}>Cargando...</div> // Mostrar loader mientras se carga la data
+          ) : (
+            <TableComponent 
+              columns={columns} 
+              data={data} 
+              renderButton={renderButton} 
+            />
+          )}
         </>
       )}
     </div>

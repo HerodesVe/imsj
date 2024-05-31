@@ -18,8 +18,10 @@ const ApproveUser: React.FC = () => {
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const { jwt } = useAuthStore(); // Obtener el JWT del store de autenticación
   const [filter, setFilter] = useState("todos");
+  const [isLoading, setIsLoading] = useState(false); // Nuevo estado para el loader
 
   const fetchUsers = async (queryParam = "") => {
+    setIsLoading(true); // Iniciar el loader
     try {
       const response = await axios.get(`http://hostnick.ddns.net:6010/user${queryParam}`, {
         headers: {
@@ -32,6 +34,8 @@ const ApproveUser: React.FC = () => {
     } catch (error) {
       console.error("Error fetching user data:", error);
       toast.error("Error al actualizar los datos");
+    } finally {
+      setIsLoading(false); // Finalizar el loader
     }
   };
 
@@ -112,7 +116,11 @@ const ApproveUser: React.FC = () => {
           Sin Verificar
         </div>
       </div>
-      <TableComponent columns={columns} data={data} renderButton={renderButton} />
+      {isLoading ? (
+        <div className={styles.loader}>Cargando...</div> // Mostrar loader mientras se carga la data
+      ) : (
+        <TableComponent columns={columns} data={data} renderButton={renderButton} />
+      )}
       <Modal isOpen={modalIsOpen} onClose={closeModal}>
         <div
           style={{

@@ -97,3 +97,10 @@
     background-color: #0047FF;
     color: white;
   }
+
+  .loader {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 20px;
+  }
+  

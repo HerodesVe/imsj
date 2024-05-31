@@ -39,11 +39,10 @@ interface Data {
   };
   infoInteracion?: {
     fechaEgresoInternacion?: string;
-    esInternacion?: boolean;
+    esInternacion?: string;
   };
   infoPatologia?: {
-
-    esExcepcion?: boolean;
+    esExcepcion?: string;
   };
   infoReintegroAnticipado?: {
     fechaReintegro?: string;
@@ -65,6 +64,10 @@ const formatDate = (dateString?: string) => {
 
 const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
   console.log(data);
+  
+  // Check if esInternacion is 'true'
+
+  const isInternacion = data?.infoInternacion?.esInternacion === "true";
 
   return (
     <div className={styles.detailsContainer}>
@@ -106,18 +109,19 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
         <div style={{ display: "flex", gap: "20px", width: "70%" }}>
           <InputField label="Certificado desde" value={formatDate(data?.fechaCertificacionDesde)} />
           <InputField label="Certificado hasta" value={formatDate(data?.fechaCertificacionHasta)} />
-          <InputField label="Fecha de actuación" value={formatDate(data?.fechaActualizacion)} />
+          <InputField label="Fecha de actualización" value={formatDate(data?.fechaActualizacion)} />
           <InputField 
             label="Institución" 
             value={data?.institucion?.descInstitucion || ""} 
-            className={styles.institucionInput}  // Aplicando la clase CSS personalizada
+            className={styles.institucionInput}  
           />
         </div>
 
         <div style={{ display: "flex", gap: "20px", width: "60%" }}>
           <InputField label="Estado" value={data?.infoEstado?.estado?.descEstado || ""} />
-          <InputField label="Fecha egreso int." value={formatDate(data?.infoInteracion?.fechaEgresoInternacion)} />
-          <InputField label="Patología" value={data?.infoPatologia?.esExcepcion ? "Sí" : "No"} />
+          
+          <InputField label="Fecha egreso int." value={isInternacion ? formatDate(data?.infoInternacion?.fechaEgreso) : ""} />
+          <InputField label="Patología" value={data?.infoPatologia?.esExcepcion === "true" ? "Si" : "No"} />
         </div>
         <div style={{ display: "flex", gap: "20px", width: "50%" }}>
           <InputField label="Fecha de Reintegro" value={formatDate(data?.infoReintegroAnticipado?.fechaReintegro)} />
@@ -129,11 +133,11 @@ const DetailsView: React.FC<DetailsViewProps> = ({ data, onBack }) => {
               },
               {
                 label: "Es Excepción",
-                checked: data?.infoPatologia?.esExcepcion || false,
+                checked: data?.infoPatologia?.esExcepcion === "true",
               },
               {
                 label: "Internación",
-                checked: data?.infoInteracion?.esInternacion || false,
+                checked: isInternacion,
               },
             ]}
           />
