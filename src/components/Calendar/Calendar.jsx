@@ -2,6 +2,7 @@ import { Calendar } from "primereact/calendar";
 import defaultStyle from "./Calendar.module.css"; // Asegúrate de importar los estilos adecuados
 import { addLocale } from "primereact/api";
 import moment from 'moment';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 export default function InputCalendar({
   label,

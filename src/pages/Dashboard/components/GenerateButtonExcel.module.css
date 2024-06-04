@@ -8,13 +8,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap:1rem;
+    gap:0.3rem;
     cursor: pointer;
     font-size: 13px;
- padding:.5rem .3rem;
+ padding:.6rem .4rem;
     background: linear-gradient(90deg, #217346 0%, #28A745 100%);
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
+    border-radius: 6px;
   }
   
   .exportButton:hover {

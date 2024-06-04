@@ -24,7 +24,8 @@ const initialValue = {
   nroOrganizacion: "0000003500665",
   idUsuario: "IMSJ_P",
   fechaDesde: getFormattedDate(yesterday), // Fecha de ayer
-  fechaHasta: getFormattedDate(today)      // Fecha de hoy
+  fechaHasta: getFormattedDate(today),      // Fecha de hoy
+  nroDocumento: "" // Nuevo campo para el filtro de número de documento
 };
 
 const Dashboard = () => {
@@ -80,7 +81,13 @@ const Dashboard = () => {
 
       // Verificar si certData es un objeto y convertirlo a array si es necesario
       const certDataArray = Array.isArray(certData) ? certData : [certData];
-      setData(certDataArray || []);
+      
+      // Filtrar los datos por número de documento si está presente
+      const filteredData = filter.nroDocumento 
+        ? certDataArray.filter(item => item.nroDocumento.includes(filter.nroDocumento))
+        : certDataArray;
+
+      setData(filteredData || []);
     } catch (error) {
       console.error(error);
       toast.error('Error en la solicitud. Por favor, intente nuevamente.');
@@ -110,26 +117,44 @@ const Dashboard = () => {
         <DetailsView data={selectedData} onBack={handleBackClick} />
       ) : (
         <>
-          <div className={styles.container__1}>
-            <div className={styles.container__calendar}>
+          <div className={styles.filterContainer}>
+            <div className={styles.filterItem}>
+              <label htmlFor="fechaDesde">Desde:</label>
               <Calendario
-                label={"Desde:"}
-                name={"fechaDesde"}
+                id="fechaDesde"
+                name="fechaDesde"
                 onChange={handleChange}
-                placeholder={"Selecciona una Fecha"}
+                placeholder="Selecciona una Fecha"
                 value={filter.fechaDesde}
-                />
-              <Calendario
-                label={"Hasta:"}
-                name={"fechaHasta"}
-                onChange={handleChange}
-                placeholder={"Selecciona una Fecha"}
-                value={filter.fechaHasta}
-                />
+              />
             </div>
-            <div className={styles.container__button}>
-              <button onClick={callSoapService}> <FiCheck fontSize={"1rem"}/> Consultar </button>
-            <GenerateExcelButton data={data} />
+            <div className={styles.filterItem}>
+              <label htmlFor="fechaHasta">Hasta:</label>
+              <Calendario
+                id="fechaHasta"
+                name="fechaHasta"
+                onChange={handleChange}
+                placeholder="Selecciona una Fecha"
+                value={filter.fechaHasta}
+              />
+            </div>
+            <div className={styles.filterItem}>
+              <label htmlFor="nroDocumento">Número de Documento:</label>
+              <input 
+                type="text" 
+                id="nroDocumento" 
+                name="nroDocumento" 
+                value={filter.nroDocumento}
+                onChange={handleChange}
+                placeholder="Ingresa número de documento" 
+                className={styles.input}
+              />
+            </div>
+            <div className={styles.buttonContainer}>
+              <button onClick={callSoapService} className={styles.consultButton}> 
+                <FiCheck fontSize="1rem" /> Consultar 
+              </button>
+              <GenerateExcelButton data={data} />
             </div>
           </div>
           {isLoading ? (

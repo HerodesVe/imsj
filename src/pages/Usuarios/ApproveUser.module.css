@@ -1,106 +1,165 @@
 /* ApproveUser.module.css */
+
 .modalIcon {
-    background-color: blue;
-    color: white;
-    border-radius: 50%;
-    padding: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    margin-bottom: 1rem;
-  }
-  
-  .modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modalContent {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    max-width: 500px;
-    width: 100%;
-    position: relative;
-  }
-  
-  .closeButton {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  
-  .modalButton {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .modalButtonAccept {
-    background-color: green;
-    color: white;
-    margin-right: 0.5rem;
-  }
-  
-  .modalButtonCancel {
-    background-color: red;
-    color: white;
-  }
-  
-  .title {
-    font-weight: 500;
-    font-size: 1.8rem;
-    margin: 1rem 1rem;
-  }
+  background-color: blue;
+  color: white;
+  border-radius: 50%;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 1.5rem;
+}
 
-  .filterContainer {
-    display: flex;
-    gap: 30px;
-    padding: 1rem;
-  }
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
-  .filter,
-  .active_filter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 113px;
-    height: 40px;
-    text-align: center;
-    color: #0047FF;
-    font-weight: 700;
-    padding: 0.2rem;
-    cursor: pointer;
-    border: 2px solid #0047FF; 
-    border-radius: 10px;
-  }
+.modalContent {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+}
 
-  .active_filter {
-    background-color: #0047FF;
-    color: white;
-  }
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
 
-  .loader {
-    text-align: center;
-    font-size: 1.5rem;
-    margin: 20px;
-  }
-  
+.modalButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.modalButtonAccept {
+  background-color: green;
+  color: white;
+  margin-right: 0.5rem;
+}
+
+.modalButtonCancel {
+  background-color: red;
+  color: white;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 1.8rem;
+  margin: 1rem 1rem;
+}
+
+.filterContainer {
+  display: flex;
+  gap: 30px;
+  padding: 1rem;
+}
+
+.filter,
+.active_filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 113px;
+  height: 40px;
+  text-align: center;
+  color: #0047FF;
+  font-weight: 700;
+  padding: 0.2rem;
+  cursor: pointer;
+  border: 2px solid #0047FF; 
+  border-radius: 10px;
+}
+
+.active_filter {
+  background-color: #0047FF;
+  color: white;
+}
+
+.loader {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 20px;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.actionButton {
+  font-size: 1.5rem;
+  cursor: pointer;
+
+}
+
+.modalTitle {
+  margin-bottom: 1rem;
+}
+
+.modalInputContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.modalInput {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.inputIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Ajustar al tamaño deseado */
+  height: 40px; /* Ajustar al tamaño deseado */
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: black;
+}
+
+.inputIcon.eye {
+  background-color: #007bff; /* Azul */
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+.inputIcon.generate {
+  background-color: #ffc107; /* Amarillo Bootstrap */
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
