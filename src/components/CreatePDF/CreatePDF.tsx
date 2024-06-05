@@ -134,7 +134,7 @@ const GenerateStyledPDF: React.FC<GenerateStyledPDFProps> = ({ data }) => {
       ["Fecha de vigencia", formatDate(data.infoEstado?.fechaVigencia)],
       ["Certificado desde", formatDate(data.fechaCertificacionDesde)],
       ["Certificado hasta", formatDate(data.fechaCertificacionHasta)],
-      ["Fecha de actuación", formatDate(data.fechaActualizacion)],
+      ["Fecha de Actualización", formatDate(data.fechaActualizacion)],
       ["Institución", data.institucion?.descInstitucion || ""],
       ["Estado", data.infoEstado?.estado?.descEstado || ""],
       ["Fecha egreso int.", data?.isInternacion ? formatDate(data?.infoInternacion?.fechaEgreso) : ""],

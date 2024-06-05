@@ -1,7 +1,7 @@
 import axios from 'axios';
 import useAuthStore from '../stores/useAuthStore';
 
-const serverBaseURL = "http://hostnick.ddns.net:6010";
+const serverBaseURL = "http://192.168.0.75:3000/";
 
 export const url = serverBaseURL;
 

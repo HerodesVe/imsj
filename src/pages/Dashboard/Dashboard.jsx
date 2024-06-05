@@ -61,7 +61,7 @@ const Dashboard = () => {
     setIsLoading(true); // Iniciar el loader
     try {
       const response = await axios.post(
-        `http://hostnick.ddns.net:6010/uruguay/sendSoapRequest`,
+        `http://192.168.0.75:3000//uruguay/sendSoapRequest`,
         filter,
         {
           headers: {

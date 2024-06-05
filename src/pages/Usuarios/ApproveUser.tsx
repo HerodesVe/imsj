@@ -28,7 +28,7 @@ const ApproveUser: React.FC = () => {
   const fetchUsers = async (queryParam = "") => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`http://hostnick.ddns.net:6010/user${queryParam}`, {
+      const response = await axios.get(`http://192.168.0.75:3000//user${queryParam}`, {
         headers: {
           Authorization: jwt,
         },
@@ -82,7 +82,7 @@ const ApproveUser: React.FC = () => {
     if (selectedUser) {
       try {
         await axios.patch(
-          `http://hostnick.ddns.net:6010/user/${selectedUser.id}`,
+          `http://192.168.0.75:3000//user/${selectedUser.id}`,
           { isVerified },
           {
             headers: {
@@ -106,7 +106,7 @@ const ApproveUser: React.FC = () => {
     if (selectedUser && password) {
       try {
         await axios.post(
-          `http://hostnick.ddns.net:6010/change-password`,
+          `http://192.168.0.75:3000//change-password`,
           { email: selectedUser.email, newPassword: password },
           {
             headers: {
