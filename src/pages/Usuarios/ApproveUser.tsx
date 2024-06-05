@@ -18,7 +18,6 @@ const ApproveUser: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [confirmationModalIsOpen, setConfirmationModalIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
-  const [confirmAction, setConfirmAction] = useState<() => void>(() => {});
   const { jwt } = useAuthStore();
   const [filter, setFilter] = useState("todos");
   const [isLoading, setIsLoading] = useState(false);
@@ -69,14 +68,15 @@ const ApproveUser: React.FC = () => {
     setModalIsOpen(false);
   };
 
-  const openConfirmationModal = (action: () => void) => {
-    setConfirmAction(() => action);
+  const openConfirmationModal = (user: any) => {
+    setSelectedUser(user);
     setConfirmationModalIsOpen(true);
   };
 
   const closeConfirmationModal = () => {
     setConfirmationModalIsOpen(false);
   };
+
 
   const approveUser = async (isVerified: boolean) => {
     if (selectedUser) {
@@ -90,7 +90,6 @@ const ApproveUser: React.FC = () => {
             },
           }
         );
-        console.log(isVerified ? "Usuario aprobado:" : "Verificación removida:", selectedUser);
         closeModal();
         closeConfirmationModal();
         fetchUsers();
@@ -137,11 +136,17 @@ const ApproveUser: React.FC = () => {
   const renderButton = (row: { [key: string]: any }) => (
     <div className={styles.actionButtons}>
       {!row.isVerified ? (
-        <button className={`${styles.actionButton} p-button p-component p-button-text`} onClick={() => { setSelectedUser(row); openConfirmationModal(() => approveUser(true)); }}>
+        <button
+          className={`${styles.actionButton} p-button p-component p-button-text`}
+          onClick={() => openConfirmationModal(row)}
+        >
           <FaCheck size={24} />
         </button>
       ) : (
-        <button className={`${styles.actionButton} p-button p-component p-button-text`} onClick={() => { setSelectedUser(row); openConfirmationModal(() => approveUser(false)); }}>
+        <button
+          className={`${styles.actionButton} p-button p-component p-button-text`}
+          onClick={() => openConfirmationModal(row)}
+        >
           <FaTimes size={24} />
         </button>
       )}
@@ -194,7 +199,7 @@ const ApproveUser: React.FC = () => {
               </div>
               <h2>Confirmación</h2>
             </div>
-            <p>¿Estás seguro de que quieres aprobar a {selectedUser?.name}?</p>
+            <p>¿Estás seguro de que quieres aprobar a {selectedUser.name}?</p>
             <div
               style={{
                 display: "flex",
@@ -250,7 +255,10 @@ const ApproveUser: React.FC = () => {
               gap: ".5rem",
             }}
           >
-            <button onClick={confirmAction} className={`${styles.modalButton} ${styles.modalButtonAccept}`}>
+            <button
+              onClick={() => approveUser(!selectedUser?.isVerified)}
+              className={`${styles.modalButton} ${styles.modalButtonAccept}`}
+            >
               Sí
             </button>
             <button onClick={closeConfirmationModal} className={`${styles.modalButton} ${styles.modalButtonCancel}`}>
