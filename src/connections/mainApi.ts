@@ -2,8 +2,9 @@ import axios from 'axios';
 import useAuthStore from '../stores/useAuthStore';
 
 const serverBaseURL = "http://192.168.0.75:3000/";
+const production = "http://192.168.0.75:3000/"
 
-export const url = serverBaseURL;
+export const url = production;
 
 const axiosInstance = axios.create({
   baseURL: url,

@@ -105,7 +105,7 @@ const ApproveUser: React.FC = () => {
     if (selectedUser && password) {
       try {
         await axios.post(
-          `http://192.168.0.75:3000/change-password`,
+          `http://192.168.0.75:3000/auth/restore-password`,
           { email: selectedUser.email, newPassword: password },
           {
             headers: {
